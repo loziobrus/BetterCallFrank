@@ -28,11 +28,11 @@ namespace BetterCallFrank.Controllers
         }
 
         [HttpPost("seedDatabase")]
-        public async Task<IActionResult> SeedDatabase()
+        public IActionResult SeedDatabase()
         {
             try
             {
-                await warehouseService.Seed();
+                warehouseService.SeedDatabase();
                 return Ok("Database has been seeded successfully.");
             }
             catch (Exception e)

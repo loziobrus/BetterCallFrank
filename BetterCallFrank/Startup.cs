@@ -41,7 +41,7 @@ namespace BetterCallFrank
             IMapper mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);
 
-
+            
             services.AddDbContext<BCFContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddTransient<IUnitOfWork, UnitOfWork>();
@@ -69,8 +69,6 @@ namespace BetterCallFrank
             app.UseRouting();
             app.UseCors("MyPolicy");
             app.UseAuthorization();
-
-            DataMocker.FillDatabase();
 
             app.UseEndpoints(endpoints =>
             {
