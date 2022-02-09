@@ -4,4 +4,9 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BCF.DataAccess\BCF.DataAccess.csproj" />
+    <ProjectReference Include="..\BCF.Model\BCF.Model.csproj" />
+  </ItemGroup>
+
 </Project>

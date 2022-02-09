@@ -18,6 +18,8 @@ namespace BCF.Model.Entities
 
         public DateTime Date_Added { get; set; }
 
+        public int GarageId { get; set; }
+
         public Garage Garage { get; set; }
     }
 }

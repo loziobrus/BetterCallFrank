@@ -18,31 +18,21 @@ namespace BCF.DataAccess
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            builder.Entity<User>(entity =>
+            builder.Entity<Garage>(entity =>
             {
-                entity.HasMany(e => e.Flats)
-                .WithOne(e => e.Owner)
-                .HasForeignKey(e => e.OwnerId);
-
-                entity.HasMany(e => e.Rentals)
-                .WithOne(e => e.Tenant)
-                .HasForeignKey(e => e.TenantId);
-
-                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+                entity.HasMany(e => e.Vehicles)
+                .WithOne(e => e.Garage)
+                .HasForeignKey(e => e.GarageId);
             });
-            builder.Entity<Flat>(entity =>
+            builder.Entity<Warehouse>(entity =>
             {
-                entity.HasMany(e => e.Facilities)
-                .WithOne(e => e.Flat)
-                .HasForeignKey(e => e.FlatId);
+                entity.HasOne(e => e.Cars)
+                .WithOne(e => e.Warehouse)
+                .HasForeignKey<Garage>(e => e.WarehouseId);
 
-                entity.HasMany(e => e.Rentals)
-                .WithOne(e => e.Flat)
-                .HasForeignKey(e => e.FlatId);
-
-                entity.HasMany(e => e.Photos)
-                .WithOne(e => e.Flat)
-                .HasForeignKey(e => e.FlatId);
+                entity.HasOne(e => e.Location)
+                .WithOne(e => e.Warehouse)
+                .HasForeignKey<Location>(e => e.WarehouseId);
             });
         }
     }

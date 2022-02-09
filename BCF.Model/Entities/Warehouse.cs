@@ -6,7 +6,11 @@
 
         public string Name { get; set; }
 
+        public int LocationId { get; set; }
+
         public Location Location { get; set; }
+
+        public int GarageId { get; set; }
 
         public Garage Cars { get; set; }
     }

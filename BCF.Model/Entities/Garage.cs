@@ -10,6 +10,8 @@ namespace BCF.Model.Entities
 
         public List<Vehicle> Vehicles { get; set; }
 
+        public int WarehouseId { get; set; }
+
         public Warehouse Warehouse { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using BCF.DataAccess.Interfaces.Repositories;
 using BCF.Model.Entities;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
 
 namespace BCF.DataAccess.Reposiories

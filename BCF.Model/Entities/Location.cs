@@ -8,6 +8,8 @@
 
         public string Long { get; set; }
 
+        public int WarehouseId { get; set; }
+
         public Warehouse Warehouse { get; set; }
     }
 }

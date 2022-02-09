@@ -1,16 +1,15 @@
+using AutoMapper;
+using BCF.BusinessLogic.Interfaces;
+using BCF.BusinessLogic.Services;
+using BCF.DataAccess;
+using BCF.DataAccess.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BetterCallFrank
 {
@@ -26,6 +25,28 @@ namespace BetterCallFrank
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("MyPolicy",
+                builder => builder.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader());
+            });
+
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new BCF.Model.Mapper());
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
+
+            services.AddDbContext<BCFContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
+            services.AddTransient<IWarehouseService, WarehouseService>();
+            
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -45,10 +66,11 @@ namespace BetterCallFrank
             }
 
             app.UseHttpsRedirection();
-
             app.UseRouting();
-
+            app.UseCors("MyPolicy");
             app.UseAuthorization();
+
+            DataMocker.FillDatabase();
 
             app.UseEndpoints(endpoints =>
             {
