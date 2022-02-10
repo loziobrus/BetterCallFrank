@@ -1,12 +1,10 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace BCF.Model.Entities
 {
     public class Vehicle
     {
-        [Key]
-        public int _ID { get; set; }
+        public int Id { get; set; }
 
         public string Make { get; set; }
 

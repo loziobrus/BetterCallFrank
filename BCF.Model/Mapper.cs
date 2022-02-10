@@ -7,8 +7,13 @@ namespace BCF.Model
     {
         public Mapper()
         {
-            CreateMap<WarehouseDTO, Warehouse>().ReverseMap();
-            CreateMap<VehicleDTO, Vehicle>().ReverseMap();
+            CreateMap<Warehouse, WarehouseDTO>();
+            CreateMap<WarehouseDTO, Warehouse>()
+                .ForPath(x => x.Id, opt => opt.MapFrom(a => a._ID));
+
+            CreateMap<Vehicle, VehicleDTO>().ReverseMap();
+            //CreateMap<VehicleDTO, Vehicle>()
+            //    .ForPath(x => x.Id, opt => opt.MapFrom(a => a._ID));
             CreateMap<GarageDTO, Garage>().ReverseMap();
             CreateMap<Location, LocationDTO>().ReverseMap();
         }

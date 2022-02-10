@@ -59,13 +59,41 @@ namespace BCF.BusinessLogic.Services
             }
         }
 
-        public async void SeedDatabase()
+        public async Task SeedDatabase()
         {
             var warehouses = ReadJSON();
 
-            foreach(var warehouse in warehouses)
+            foreach(var warehouseDTO in warehouses)
             {
-                await Insert(warehouse);
+                var warehouse = mapper.Map<Warehouse>(warehouseDTO);
+                warehouse.Cars = null;
+                warehouse.Location = null;
+                await unitOfWork.WarehouseRepository.Insert(warehouse);
+                await unitOfWork.Save();
+
+                var location = mapper.Map<Location>(warehouseDTO.Location);
+                location.WarehouseId = warehouse.Id;
+                await unitOfWork.LocationRepository.Insert(location);
+                await unitOfWork.Save();
+
+                var garage = mapper.Map<Garage>(warehouseDTO.Cars);
+                garage.WarehouseId = warehouse.Id;
+                garage.Vehicles = null;
+                await unitOfWork.GarageRepository.Insert(garage);
+                await unitOfWork.Save();
+
+                foreach (var vehicleDTO in warehouseDTO.Cars.Vehicles)
+                {
+                    var vehicle = mapper.Map<Vehicle>(vehicleDTO);
+                    vehicle.GarageId = garage.Id;
+                    await unitOfWork.VehicleRepository.Insert(vehicle);
+                    await unitOfWork.Save();
+                }
+
+                warehouse.LocationId = location.Id;
+                warehouse.GarageId = garage.Id;
+                unitOfWork.WarehouseRepository.Update(warehouse);
+                await unitOfWork.Save();
             }
         }
 

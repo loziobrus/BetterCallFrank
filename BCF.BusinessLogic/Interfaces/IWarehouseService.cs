@@ -12,6 +12,6 @@ namespace BCF.BusinessLogic.Interfaces
 
         public void Update(string id, WarehouseDTO warehouseDTO);
 
-        public void SeedDatabase();
+        public Task SeedDatabase();
     }
 }
