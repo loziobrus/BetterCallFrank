@@ -20,7 +20,7 @@ namespace BetterCallFrank.Controllers
             warehouseService = _warehouseService;
         }
 
-        [HttpGet]
+        [HttpGet("getWarehouses")]
         public ActionResult<IEnumerable<WarehouseDTO>> GetAll()
         {
             var warehouses = warehouseService.GetAll();

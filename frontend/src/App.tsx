@@ -1,5 +1,6 @@
 import React from 'react';
 import './App.css';
+import VehiclesTable from './Table';
 
 function App() {
   return (
@@ -7,6 +8,7 @@ function App() {
       <header className="App-header">
         Better call Frank
       </header>
+      <VehiclesTable />
     </div>
   );
 }
