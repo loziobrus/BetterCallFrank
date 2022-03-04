@@ -46,7 +46,8 @@ namespace BetterCallFrank
 
             services.AddTransient<IUnitOfWork, UnitOfWork>();
             services.AddTransient<IWarehouseService, WarehouseService>();
-            
+            services.AddTransient<IVehicleService, VehicleService>();
+
 
             services.AddControllers();
             services.AddSwaggerGen(c =>

@@ -6,9 +6,8 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        Better call Frank
+        <VehiclesTable />
       </header>
-      <VehiclesTable />
     </div>
   );
 }
