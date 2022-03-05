@@ -18,8 +18,7 @@ namespace BCF.DataAccess.Reposiories
                 .ThenInclude(g => g.Warehouse)
                 .ThenInclude(w => w.Location);
 
-            return query.Where(x => x.Licensed)
-                .OrderBy(x => x.Date_Added);
+            return query.OrderBy(x => x.Date_Added);
         }
     }
 }

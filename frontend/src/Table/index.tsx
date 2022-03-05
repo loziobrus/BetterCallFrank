@@ -11,26 +11,28 @@ import './styles.css'
 import { TableFooter, TablePagination } from '@mui/material';
 import DetailsModal from '../Modal';
 
+const initVehicle = { 
+  _ID: 0, 
+  date_Added: new Date(), 
+  licensed: false, 
+  location: {
+    garage: '',
+    warehouseLocation: {
+      lat: '',
+      long: ''
+    },
+    warehouseName: ''
+  }, 
+  make: '',
+  model: '',
+  price: 0,
+  year_Model: 0
+}
+
 const VehiclesTable = () => {
   const [rows, setRows] = useState<Vehicle[]>([]);
   const [open, setOpen] = useState<boolean>(false);
-  const [vehicle, setVehicle] = useState<Vehicle>({ 
-    _ID: 0, 
-    date_Added: new Date(), 
-    licensed: false, 
-    location: {
-      garage: '',
-      warehouseLocation: {
-        lat: '',
-        long: ''
-      },
-      warehouseName: ''
-    }, 
-    make: '',
-    model: '',
-    price: 0,
-    year_Model: 0
-  });
+  const [vehicle, setVehicle] = useState<Vehicle>(initVehicle);
 
   const getRows = async () => {
     const data: Vehicle[] = (await getVehicles()).data;
@@ -46,6 +48,10 @@ const VehiclesTable = () => {
     setVehicle(vehicle);
   }
 
+  const getVehicleName = (vehicle: Vehicle) => {
+    return `${vehicle.make} ${vehicle.model}${!vehicle.licensed && ' (not licensed)'}`
+  }
+
   return (
     <TableContainer component={Paper} className="table-container">
       <Table stickyHeader>
@@ -59,14 +65,8 @@ const VehiclesTable = () => {
         </TableHead>
         <TableBody>
           {rows.map((vehicle: Vehicle) => (
-            <TableRow
-              key={vehicle._ID}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              onClick={() => openModal(vehicle)}
-            >
-              <TableCell component="th" scope="row">
-                {vehicle.make} {vehicle.model}
-              </TableCell>
+            <TableRow key={vehicle._ID} onClick={() => vehicle.licensed && openModal(vehicle)} className={vehicle.licensed ? 'active' : 'unactive'}>
+              <TableCell>{getVehicleName(vehicle)}</TableCell>
               <TableCell align="right">{vehicle.year_Model}</TableCell>
               <TableCell align="right">{new Date(vehicle.date_Added).toLocaleDateString("en-US")}</TableCell>
               <TableCell align="right">{vehicle.price} $</TableCell>
