@@ -6,10 +6,10 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import { getVehicles } from '../api/requests';
+import { getVehicles } from '../../api/requests';
 import './styles.css'
 import { TableFooter, TablePagination } from '@mui/material';
-import DetailsModal from '../Modal';
+import DetailsModal from '../DetailsModal';
 
 const initVehicle = { 
   _ID: 0, 
@@ -49,7 +49,7 @@ const VehiclesTable = () => {
   }
 
   const getVehicleName = (vehicle: Vehicle) => {
-    return `${vehicle.make} ${vehicle.model}${!vehicle.licensed && ' (not licensed)'}`
+    return `${vehicle.make} ${vehicle.model}${!vehicle.licensed ? ' (not licensed)' : ''}`
   }
 
   return (

@@ -1,14 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './App.css';
-import VehiclesTable from './Table';
+import VehiclesTable from './components/Table';
+import CartButton from './components/CartButton';
+import { CartProvider } from './context/CartContext'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <VehiclesTable />
-      </header>
-    </div>
+    <CartProvider>
+      <div className="app">
+        <div className="app-header">
+          <CartButton />
+        </div>
+        <div className="app-body">
+          <VehiclesTable />
+        </div>
+      </div>
+    </CartProvider>
   );
 }
 
