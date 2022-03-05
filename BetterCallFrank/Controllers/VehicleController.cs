@@ -19,7 +19,7 @@ namespace BetterCallFrank.Controllers
         }
 
         [HttpGet("getVehicles")]
-        public ActionResult<IEnumerable<VehicleDTO>> GetAll()
+        public ActionResult<IEnumerable<VehicleDetailedDTO>> GetAll()
         {
             var vehicles = VehicleService.GetAll();
             return Ok(vehicles);

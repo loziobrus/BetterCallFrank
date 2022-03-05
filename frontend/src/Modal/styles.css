@@ -1,0 +1,16 @@
+.modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: 'translate(-50%, -50%)';
+    width: 400;
+}
+
+.details-container {
+    padding: 30px;
+    width: 20vw;
+}
+
+.info-block {
+    margin-bottom: 15px;
+}

@@ -6,6 +6,6 @@ namespace BCF.BusinessLogic.Interfaces
 {
     public interface IVehicleService
     {
-        public IEnumerable<VehicleDTO> GetAll();
+        public IEnumerable<VehicleDetailedDTO> GetAll();
     }
 }
