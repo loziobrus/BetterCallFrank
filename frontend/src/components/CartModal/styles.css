@@ -3,16 +3,25 @@
     align-items: center;
     justify-content: center;
     transform: 'translate(-50%, -50%)';
-    width: 400;
 }
 
 .cart-container {
     padding: 30px;
-    width: 20vw;
+    width: 40vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-.cart-item {
+.cart-checkout{
     display: flex;
-    
-    margin-bottom: 15px;
+    flex-direction: column;
+    align-items: flex-end !important;
+}
+
+.price-remove {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 15px;
 }
