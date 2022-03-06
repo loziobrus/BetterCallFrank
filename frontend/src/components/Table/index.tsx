@@ -10,6 +10,7 @@ import { getVehicles } from '../../api/requests';
 import './styles.css'
 import { TableFooter, TablePagination } from '@mui/material';
 import DetailsModal from '../DetailsModal';
+import TablePaginationActions from './Pagination';
 
 const initVehicle = { 
   _ID: 0, 
@@ -33,6 +34,8 @@ const VehiclesTable = () => {
   const [rows, setRows] = useState<Vehicle[]>([]);
   const [open, setOpen] = useState<boolean>(false);
   const [vehicle, setVehicle] = useState<Vehicle>(initVehicle);
+  const [page, setPage] = useState<number>(0);
+  const [rowsPerPage, setRowsPerPage] = useState<number>(10);
 
   const getRows = async () => {
     const data: Vehicle[] = (await getVehicles()).data;
@@ -52,10 +55,24 @@ const VehiclesTable = () => {
     return `${vehicle.make} ${vehicle.model}${!vehicle.licensed ? ' (not licensed)' : ''}`
   }
 
+  const handleChangePage = (
+    event: React.MouseEvent<HTMLButtonElement> | null,
+    newPage: number,
+  ) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
   return (
     <TableContainer component={Paper} className="table-container">
       <Table stickyHeader>
-        <TableHead>
+        <TableHead className="table-header">
           <TableRow>
             <TableCell>Model</TableCell>
             <TableCell align="right">Year</TableCell>
@@ -64,7 +81,10 @@ const VehiclesTable = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((vehicle: Vehicle) => (
+          {(rowsPerPage > 0
+            ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            : rows
+          ).map((vehicle: Vehicle) => (
             <TableRow key={vehicle._ID} onClick={() => vehicle.licensed && openModal(vehicle)} className={vehicle.licensed ? 'active' : 'unactive'}>
               <TableCell>{getVehicleName(vehicle)}</TableCell>
               <TableCell align="right">{vehicle.year_Model}</TableCell>
@@ -73,19 +93,20 @@ const VehiclesTable = () => {
             </TableRow>
           ))}
         </TableBody>
-        {/* <TableFooter>
+        <TableFooter>
           <TableRow>
           <TablePagination
-          rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-          colSpan={3}
-          count={rows.length}
-          rowsPerPage={10}
-          page={page}
-          onPageChange={handleChangePage}
-          ActionsComponent={TablePaginationActions}
+            rowsPerPageOptions={[5, 7, 10]}
+            colSpan={3}
+            count={rows.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+            ActionsComponent={TablePaginationActions}
           />
           </TableRow>
-        </TableFooter> */}
+        </TableFooter>
       </Table>
       <DetailsModal vehicle={vehicle} open={open} setOpen={setOpen}/>
     </TableContainer>

@@ -1,6 +1,10 @@
 .table-container {
-    height: 70vh;
+    height: auto;
     width: 70vw !important;
+}
+
+.table-header th {
+    font-weight: bold;
 }
 
 .active {
